@@ -1,0 +1,194 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,600&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Restless Dreamers Design Tokens ─────────────────────────── */
+:root {
+  --rd-ink:       #0F0F0F;
+  --rd-paper:     #FAFAF8;
+  --rd-surface:   #FFFFFF;
+  --rd-border:    #E4E4E0;
+  --rd-muted:     #888884;
+  --rd-accent:    #D97706;
+  --rd-accent-lt: #FEF3C7;
+  --rd-accent-dk: #92400E;
+  --rd-success:   #16A34A;
+  --rd-danger:    #DC2626;
+  --rd-info:      #2563EB;
+  --rd-warning:   #D97706;
+
+  /* Sidebar */
+  --sidebar-width: 240px;
+  --lesson-sidebar-width: 280px;
+}
+
+/* ─── Base ────────────────────────────────────────────────────── */
+@layer base {
+  *, *::before, *::after {
+    @apply border-rd-border;
+    box-sizing: border-box;
+  }
+
+  html {
+    font-family: 'DM Sans', system-ui, sans-serif;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-rd-paper text-rd-ink antialiased;
+    font-family: 'DM Sans', system-ui, sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Fraunces', Georgia, serif;
+    @apply text-rd-ink font-semibold leading-tight;
+  }
+
+  code, pre, kbd {
+    font-family: 'JetBrains Mono', Menlo, monospace;
+  }
+
+  /* Smooth transitions globally */
+  a, button, input, select, textarea {
+    @apply transition-all duration-150 ease-in-out;
+  }
+
+  /* Focus outlines */
+  *:focus-visible {
+    @apply outline-none ring-2 ring-rd-accent ring-offset-2 ring-offset-rd-paper;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { @apply bg-rd-border rounded-full; }
+  ::-webkit-scrollbar-thumb:hover { @apply bg-rd-muted; }
+}
+
+/* ─── Components ──────────────────────────────────────────────── */
+@layer components {
+  /* Card */
+  .rd-card {
+    @apply bg-rd-surface border border-rd-border rounded-card p-6;
+  }
+
+  /* Amber accent badge */
+  .rd-badge {
+    @apply inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium
+           bg-rd-accent-lt text-rd-accent-dk border border-rd-accent/20;
+  }
+
+  /* Sidebar active state */
+  .sidebar-link {
+    @apply flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium text-rd-muted
+           hover:bg-rd-accent-lt hover:text-rd-ink transition-all duration-150;
+  }
+
+  .sidebar-link.active {
+    @apply bg-rd-accent-lt text-rd-ink font-semibold border-l-[3px] border-rd-accent pl-[calc(0.75rem-3px)];
+  }
+
+  /* Tag chip */
+  .rd-tag {
+    @apply inline-block px-2.5 py-0.5 rounded-full text-xs font-medium
+           bg-rd-accent-lt text-rd-accent-dk border border-rd-accent/20;
+  }
+
+  /* Primary button */
+  .rd-btn {
+    @apply inline-flex items-center justify-center gap-2 px-4 py-2 rounded-btn text-sm font-semibold
+           bg-rd-accent text-white hover:bg-rd-accent-dk active:scale-[0.98]
+           transition-all duration-150 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  /* Secondary button */
+  .rd-btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 px-4 py-2 rounded-btn text-sm font-semibold
+           bg-rd-surface text-rd-ink border border-rd-border hover:bg-rd-accent-lt hover:border-rd-accent
+           transition-all duration-150 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  /* Ghost button */
+  .rd-btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 px-3 py-1.5 rounded-btn text-sm font-medium
+           text-rd-muted hover:text-rd-ink hover:bg-rd-accent-lt
+           transition-all duration-150;
+  }
+
+  /* Input */
+  .rd-input {
+    @apply block w-full px-3 py-2 text-sm bg-rd-surface border border-rd-border rounded-btn
+           text-rd-ink placeholder:text-rd-muted
+           focus:outline-none focus:ring-2 focus:ring-rd-accent focus:border-rd-accent
+           transition-all duration-150;
+  }
+
+  /* Section header */
+  .rd-section-title {
+    @apply text-xs font-semibold uppercase tracking-widest text-rd-muted px-3 mb-1;
+  }
+
+  /* Lesson type icon wrapper */
+  .lesson-icon {
+    @apply w-7 h-7 flex items-center justify-center rounded-md shrink-0;
+  }
+
+  /* Progress bar base */
+  .progress-bar {
+    @apply h-1 bg-rd-border rounded-full overflow-hidden;
+  }
+
+  .progress-bar-fill {
+    @apply h-full bg-rd-accent rounded-full transition-all duration-500 ease-out;
+  }
+}
+
+/* ─── Tiptap Editor Styles ────────────────────────────────────── */
+.ProseMirror {
+  @apply outline-none min-h-[200px] text-rd-ink;
+}
+
+.ProseMirror p { @apply mb-4 leading-relaxed; }
+.ProseMirror h1 { @apply text-3xl font-semibold mb-4 mt-6 font-display; }
+.ProseMirror h2 { @apply text-2xl font-semibold mb-3 mt-5 font-display; }
+.ProseMirror h3 { @apply text-xl font-semibold mb-2 mt-4 font-display; }
+.ProseMirror ul { @apply list-disc pl-6 mb-4 space-y-1; }
+.ProseMirror ol { @apply list-decimal pl-6 mb-4 space-y-1; }
+.ProseMirror blockquote {
+  @apply border-l-4 border-rd-accent pl-4 italic text-rd-muted my-4;
+}
+.ProseMirror code {
+  @apply bg-rd-accent-lt text-rd-accent-dk px-1.5 py-0.5 rounded text-sm font-mono;
+}
+.ProseMirror pre {
+  @apply bg-rd-ink text-rd-paper p-4 rounded-card my-4 overflow-x-auto font-mono text-sm;
+}
+.ProseMirror a { @apply text-rd-accent underline underline-offset-2 hover:text-rd-accent-dk; }
+.ProseMirror hr { @apply my-6 border-rd-border; }
+.ProseMirror img { @apply max-w-full rounded-card my-4; }
+.ProseMirror .is-empty::before {
+  content: attr(data-placeholder);
+  @apply text-rd-muted pointer-events-none float-left h-0;
+}
+
+/* ─── Animations ──────────────────────────────────────────────── */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(16px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes countUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in    { animation: fadeIn 0.25s ease both; }
+.animate-slide-in-r { animation: slideInRight 0.2s ease both; }
+.animate-count-up   { animation: countUp 0.4s ease both; }
