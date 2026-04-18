@@ -116,7 +116,8 @@ export default function CourseEditorClient({ course: initial, userId }: Props) {
     // Persist positions
     await Promise.all(
       reordered.map((c) =>
-        supabase.from("chapters").update({ position: c.position }).eq("id", c.id)
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        supabase.from("chapters").update({ position: c.position } as any).eq("id", c.id)
       )
     );
   };
@@ -134,9 +135,10 @@ export default function CourseEditorClient({ course: initial, userId }: Props) {
         const reordered = arrayMove(c.lessons, oldIdx, newIdx).map((l, i) => ({ ...l, position: i }));
 
         // Persist async
-        Promise.all(
+        void Promise.all(
           reordered.map((l) =>
-            supabase.from("lessons").update({ position: l.position }).eq("id", l.id)
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            supabase.from("lessons").update({ position: l.position } as any).eq("id", l.id)
           )
         );
 
